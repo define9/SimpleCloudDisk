@@ -1,0 +1,7 @@
+# Project exclude paths
+/SimpleCloudDisk-adapter/target/
+/SimpleCloudDisk-app/target/
+/SimpleCloudDisk-client/target/
+/SimpleCloudDisk-domain/target/
+/SimpleCloudDisk-infrastructure/target/
+/start/target/
