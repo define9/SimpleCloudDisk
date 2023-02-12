@@ -27,8 +27,9 @@ public class CoreController {
     // 1. 发送邮件
     @VerifyCaptcha
     @GetMapping("/sendEmail")
-    public SingleResponse sendEmail(String email) {
+    public SingleResponse<String> sendEmail(String email, HttpSession session) {
         String code = new RandomGenerator(6).generate();
+        session.setAttribute(CoreConstant.CAPTCHA_KEY, code);
         coreService.sendMailCode(email, code);
         return SingleResponse.of("发送成功");
     }
