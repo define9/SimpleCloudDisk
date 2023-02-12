@@ -24,8 +24,8 @@
 		</dependency>
 		<!-- COLA components End-->
 		<dependency>
-			<groupId>cn.tomisme</groupId>
-			<artifactId>SimpleCloudDisk-client</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
 

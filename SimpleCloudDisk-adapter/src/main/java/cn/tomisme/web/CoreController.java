@@ -2,6 +2,8 @@ package cn.tomisme.web;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
+import cn.tomisme.api.ICoreService;
 import cn.tomisme.domain.annotation.VerifyCaptcha;
 import cn.tomisme.domain.model.constant.CoreConstant;
 import com.alibaba.cola.dto.SingleResponse;
@@ -20,8 +22,16 @@ import java.io.IOException;
 @RequestMapping("/core")
 @RequiredArgsConstructor
 public class CoreController {
+    private final ICoreService coreService;
 
     // 1. 发送邮件
+    @VerifyCaptcha
+    @GetMapping("/sendEmail")
+    public SingleResponse sendEmail(String email) {
+        String code = new RandomGenerator(6).generate();
+        coreService.sendMailCode(email, code);
+        return SingleResponse.of("发送成功");
+    }
 
     // 2. 获取图片验证码
     @GetMapping("/captcha")

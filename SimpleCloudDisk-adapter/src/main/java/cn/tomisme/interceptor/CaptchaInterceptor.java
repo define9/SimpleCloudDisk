@@ -31,6 +31,9 @@ public class CaptchaInterceptor implements HandlerInterceptor {
         String sessionCode = (String) request.getSession().getAttribute(CoreConstant.CAPTCHA_KEY);
         String requestParameter = request.getParameter(captcha.paramName());
 
+        // 验证码已经取出，废弃验证码
+        request.getSession().removeAttribute(CoreConstant.CAPTCHA_KEY);
+
         if (StringUtils.isBlank(sessionCode)) {
             throw new BizException("验证码过期");
         }
@@ -40,7 +43,6 @@ public class CaptchaInterceptor implements HandlerInterceptor {
         }
 
         if (!sessionCode.equalsIgnoreCase(requestParameter)) {
-            request.getSession().removeAttribute(CoreConstant.CAPTCHA_KEY);
             throw new BizException("验证码错误");
         }
 

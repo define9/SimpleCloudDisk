@@ -25,5 +25,10 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>cn.tomisme</groupId>
+			<artifactId>SimpleCloudDisk-infrastructure</artifactId>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,0 +1,37 @@
+server:
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/simple_cloud_disk?setUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  # emailQQ邮箱配置
+  mail:
+    from: define9@tomisme.cn # 谁发送这个邮件
+    password: password # 发送人的授权码
+    username: define9@tomisme.cn # 用户名
+    port: 465
+    host: smtp.exmail.qq.com
+    properties:
+      mail:
+        #配置SSL 加密工厂
+        smtp:
+          ssl:
+            #本地测试，先放开ssl
+            enable: true
+          #开启debug模式，这样邮件发送过程的日志会在控制台打印出来，方便排查错误
+        debug: false
+
+jwt:
+  sign: 2733C22A88F003BA85225D9FF4F97032
+  expireSecTime: 1200
+  # 小于 500 s 更新
+  updateTime: 500

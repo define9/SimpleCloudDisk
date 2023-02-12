@@ -5,3 +5,33 @@
 /SimpleCloudDisk-domain/target/
 /SimpleCloudDisk-infrastructure/target/
 /start/target/
+
+# 忽略线上的配置
+application-prod.yml
+
+target/
+
+### eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+bin/
+doc/
+.DS_Store

@@ -39,6 +39,12 @@
 			<artifactId>javax.el</artifactId>
 		</dependency>
 		<!-- JSR 303 Validation End-->
+
+		<!-- 邮件 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
