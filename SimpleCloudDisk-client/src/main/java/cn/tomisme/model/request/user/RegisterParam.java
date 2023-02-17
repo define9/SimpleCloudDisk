@@ -1,4 +1,4 @@
-package cn.tomisme.dto.user;
+package cn.tomisme.model.request.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

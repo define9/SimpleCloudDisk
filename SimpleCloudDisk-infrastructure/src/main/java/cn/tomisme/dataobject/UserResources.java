@@ -1,31 +1,31 @@
 package cn.tomisme.dataobject;
 
-import cn.tomisme.enums.StorageNodeType;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
-@TableName("storage_node_config")
-@NoArgsConstructor
+@TableName("user_resources")
 @AllArgsConstructor
-public class StorageNodeConfig {
+@NoArgsConstructor
+public class UserResources {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Integer sort;
+    private String fileName;
 
-    private String nodeName;
+    private Integer resourcesId;
 
-    private StorageNodeType nodeType;
+    private Date createTime;
 
-    private String nodeLocalPath;
+    private Integer userId;
 
-    private Boolean disable;
+    private Integer folderId;
 
     private Boolean deleted;
 }

@@ -1,8 +1,8 @@
 package cn.tomisme.api;
 
 import cn.tomisme.dataobject.User;
-import cn.tomisme.dto.user.LoginParam;
-import cn.tomisme.dto.user.RegisterParam;
+import cn.tomisme.model.request.user.LoginParam;
+import cn.tomisme.model.request.user.RegisterParam;
 import com.alibaba.cola.exception.BizException;
 import com.baomidou.mybatisplus.extension.service.IService;
 

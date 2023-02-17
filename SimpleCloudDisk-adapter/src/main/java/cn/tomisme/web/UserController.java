@@ -2,8 +2,8 @@ package cn.tomisme.web;
 
 import cn.tomisme.api.IUserService;
 import cn.tomisme.domain.annotation.VerifyCaptcha;
-import cn.tomisme.dto.user.LoginParam;
-import cn.tomisme.dto.user.RegisterParam;
+import cn.tomisme.model.request.user.LoginParam;
+import cn.tomisme.model.request.user.RegisterParam;
 import com.alibaba.cola.dto.SingleResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,31 +1,26 @@
 package cn.tomisme.dataobject;
 
-import cn.tomisme.enums.StorageNodeType;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 文件夹表
+ */
 @Data
-@TableName("storage_node_config")
+@TableName("folder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class StorageNodeConfig {
+public class Folder {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private Integer sort;
+    private String name;
 
-    private String nodeName;
+    private Integer userId;
 
-    private StorageNodeType nodeType;
-
-    private String nodeLocalPath;
-
-    private Boolean disable;
-
-    private Boolean deleted;
+    private Integer parentId;
 }

@@ -1,7 +1,7 @@
 package cn.tomisme.customer.convert;
 
 import cn.tomisme.dataobject.User;
-import cn.tomisme.dto.user.RegisterParam;
+import cn.tomisme.model.request.user.RegisterParam;
 
 public class UserConvert {
     public User fromRegisterParam(RegisterParam param) {

@@ -1,6 +1,8 @@
 package cn.tomisme.mapper;
 
 import cn.tomisme.dataobject.StorageNodeConfig;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.junit.jupiter.api.Test;
