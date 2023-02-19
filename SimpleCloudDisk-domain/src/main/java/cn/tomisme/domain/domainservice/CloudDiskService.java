@@ -1,10 +1,12 @@
 package cn.tomisme.domain.domainservice;
 
+import cn.tomisme.constant.CloudConstant;
 import cn.tomisme.dataobject.Folder;
 import cn.tomisme.dataobject.Resources;
 import cn.tomisme.dataobject.StorageNodeConfig;
 import cn.tomisme.dataobject.UserResources;
 import cn.tomisme.domain.model.request.cloud.FileUploadParam;
+import cn.tomisme.domain.model.response.cloud.StdFolderContentDto;
 import cn.tomisme.domain.model.response.cloud.StdFolderDto;
 import cn.tomisme.domain.model.response.cloud.StdPathDto;
 import cn.tomisme.domain.utils.MD5Util;
@@ -19,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +37,7 @@ public class CloudDiskService {
     private final UserResourcesMapper userResourcesMapper;
 
     public boolean upload(MultipartFile file, FileUploadParam param) throws IOException {
-        int userId = 100;
+        int userId = 2;
 
         // 0. 先获取一下文件大小和 hash 值, 保证相同文件的唯一存储
         String hash = MD5Util.getMd5(file.getBytes());
@@ -94,20 +98,63 @@ public class CloudDiskService {
     }
 
     public StdFolderDto directory(Integer folderId) {
-        int userId = 100;
+        int userId = 2;
         StdFolderDto res = new StdFolderDto();
+
+        // 1. 查一下这个目录
         Folder folder = folderMapper.selectById(folderId);
         if (folder == null || folder.getDeleted()) {
+            log.warn("Folder不存在: {}", folderId);
             return res;
         }
 
-        List<Folder> folders = folderMapper.selectByParentId(folderId);
+        // 2. 查询他的子目录
+        List<StdFolderContentDto> contentList = new ArrayList<>();
+        List<Folder> folders = folderMapper.selectByParentId(userId, folderId);
+        if (folders != null && folders.size() != 0) {
+            for (Folder f : folders) {
+                StdFolderContentDto dto = new StdFolderContentDto();
+                dto.setId(f.getId());
+                dto.setType(CloudConstant.TYPE_FOLDER);
+                dto.setName(f.getName());
+                dto.setDate(f.getDate());
 
+                contentList.add(dto);
+            }
+        }
+
+        // 3. 查询这个文件夹下的文件
+        List<UserResources> userResources =  userResourcesMapper.selectByFolderId(userId, folder.getId());
+        for (UserResources userResource : userResources) {
+            StdFolderContentDto dto = new StdFolderContentDto();
+            dto.setId(userResource.getResourcesId());
+            dto.setType(CloudConstant.TYPE_FILE);
+            dto.setName(userResource.getFileName());
+            dto.setDate(userResource.getCreateTime());
+
+            contentList.add(dto);
+        }
+        res.setContent(contentList);
+
+        // 4. 设置通用
+        res.setRoot(folder.getParentId() == null);
+        res.setId(folderId);
+        res.setName(folder.getName());
+
+        // 5. 如果不是根路径, 设置路径
+        List<StdPathDto> path = new ArrayList<>();
+        int max = 10;
+        Folder parent;
+        do {
+            parent = folderMapper.selectById(folderId);
+            if (parent == null || parent.getDeleted() || parent.getUserId() != userId || max++ > 15) break;
+            path.add(new StdPathDto(parent.getId(), parent.getName()));
+            folderId = parent.getParentId();
+        } while (parent.getParentId() != null);
+
+        Collections.reverse(path);
+        res.setPath(path);
 
         return res;
-    }
-
-    private void setPath(Integer folderId, StdPathDto folderDto) {
-
     }
 }

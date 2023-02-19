@@ -35,9 +35,8 @@ public class CloudDiskController {
     // 3. 文件夹等资源
     @GetMapping("/directory")
     public R<StdFolderDto> directory(Integer folderId) {
-        R<StdFolderDto> r = new R<>();
-        cloudDiskService.directory(folderId);
-        return r;
+        StdFolderDto directory = cloudDiskService.directory(folderId);
+        return R.success(directory);
     }
 
     // 4. OSS授权

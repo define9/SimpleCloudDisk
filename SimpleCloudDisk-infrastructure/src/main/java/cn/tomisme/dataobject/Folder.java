@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 文件夹表
  */
@@ -20,9 +22,9 @@ public class Folder {
 
     private String name;
 
-    private Integer userId;
+    private Date date;
 
-    private Boolean root;
+    private Integer userId;
 
     private Integer parentId;
 
