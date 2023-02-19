@@ -10,4 +10,6 @@ import java.util.List;
 @Mapper
 public interface FolderMapper extends BaseMapper<Folder> {
     List<Folder> selectByParentId(@Param("userId") Integer userId, @Param("folderId") Integer folderId);
+
+    Integer selectRootByUserId(int userId);
 }

@@ -1,6 +1,7 @@
 package cn.tomisme.dataobject;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -28,4 +29,10 @@ public class UserResources {
     private Integer folderId;
 
     private Boolean deleted;
+
+    /**
+     * 文件的类型
+     */
+    @TableField(exist = false)
+    private String mimeType;
 }

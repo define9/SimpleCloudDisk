@@ -9,4 +9,10 @@
                    and `user_id`=#{userId}
                    and `deleted`=false
     </select>
+    <select id="selectRootByUserId" resultType="java.lang.Integer">
+        select `id` from `folder`
+                    where `deleted`=false
+                      and isnull(`parent_id`)
+                      and `user_id`=#{userId} limit 1
+    </select>
 </mapper>

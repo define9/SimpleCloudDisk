@@ -97,9 +97,14 @@ public class CloudDiskService {
         return null;
     }
 
-    public StdFolderDto directory(Integer folderId) {
+    public StdFolderDto directory(Integer folderId, Boolean needPath) {
         int userId = 2;
         StdFolderDto res = new StdFolderDto();
+
+        // 0. 如果没有传入, 查询根目录的
+        if (folderId == null) {
+            folderId = folderMapper.selectRootByUserId(userId);
+        }
 
         // 1. 查一下这个目录
         Folder folder = folderMapper.selectById(folderId);
@@ -132,6 +137,8 @@ public class CloudDiskService {
             dto.setName(userResource.getFileName());
             dto.setDate(userResource.getCreateTime());
 
+            dto.setMimeType(userResource.getMimeType());
+
             contentList.add(dto);
         }
         res.setContent(contentList);
@@ -141,6 +148,8 @@ public class CloudDiskService {
         res.setId(folderId);
         res.setName(folder.getName());
 
+        if (needPath == null || !needPath) return res;
+
         // 5. 如果不是根路径, 设置路径
         List<StdPathDto> path = new ArrayList<>();
         int max = 10;
@@ -148,11 +157,9 @@ public class CloudDiskService {
         do {
             parent = folderMapper.selectById(folderId);
             if (parent == null || parent.getDeleted() || parent.getUserId() != userId || max++ > 15) break;
-            path.add(new StdPathDto(parent.getId(), parent.getName()));
+            path.add(0, new StdPathDto(parent.getId(), parent.getName()));
             folderId = parent.getParentId();
         } while (parent.getParentId() != null);
-
-        Collections.reverse(path);
         res.setPath(path);
 
         return res;
