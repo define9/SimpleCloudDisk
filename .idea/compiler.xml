@@ -11,9 +11,11 @@
         <module name="SimpleCloudDisk-domain" />
         <module name="SimpleCloudDisk-adapter" />
         <module name="SimpleCloudDisk-infrastructure" />
-        <module name="SimpleCloudDisk-app" />
-        <module name="SimpleCloudDisk-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SimpleCloudDisk-app" target="1.8" />
+      <module name="SimpleCloudDisk-client" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

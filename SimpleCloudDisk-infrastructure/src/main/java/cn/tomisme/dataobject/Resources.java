@@ -30,6 +30,11 @@ public class Resources {
     private String resourcesName;
 
     /**
+     * 资源的类型
+     */
+    private String mimeType;
+
+    /**
      * 实际存储的文件 hash 值
      */
     private String hash;

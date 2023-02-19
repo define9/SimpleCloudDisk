@@ -1,6 +1,6 @@
 package cn.tomisme.config;
 
-import com.alibaba.cola.dto.SingleResponse;
+import cn.tomisme.domain.model.response.R;
 import com.alibaba.cola.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,8 +15,8 @@ public class ExceptionAdvice {
      * @return R
      */
     @ExceptionHandler(value = BizException.class)
-    public SingleResponse handleException(BizException exception) {
+    public R handleException(BizException exception) {
         log.error("error: {}", exception.getMessage());
-        return SingleResponse.buildFailure(exception.getErrCode(), exception.getMessage());
+        return R.error(exception.getErrCode(), exception.getMessage());
     }
 }

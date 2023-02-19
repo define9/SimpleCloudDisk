@@ -14,10 +14,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>cn.tomisme</groupId>
-			<artifactId>SimpleCloudDisk-domain</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 		</dependency>
@@ -49,6 +45,10 @@
 			<artifactId>junit-jupiter</artifactId>
 			<version>RELEASE</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
 </project>

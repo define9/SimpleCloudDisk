@@ -19,9 +19,7 @@
     </properties>
 
     <modules>
-        <module>SimpleCloudDisk-client</module>
         <module>SimpleCloudDisk-adapter</module>
-        <module>SimpleCloudDisk-app</module>
         <module>SimpleCloudDisk-domain</module>
         <module>SimpleCloudDisk-infrastructure</module>
         <module>start</module>

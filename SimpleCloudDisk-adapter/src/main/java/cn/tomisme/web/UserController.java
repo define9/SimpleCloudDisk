@@ -1,10 +1,10 @@
 package cn.tomisme.web;
 
-import cn.tomisme.api.IUserService;
-import cn.tomisme.domain.annotation.VerifyCaptcha;
-import cn.tomisme.model.request.user.LoginParam;
-import cn.tomisme.model.request.user.RegisterParam;
-import com.alibaba.cola.dto.SingleResponse;
+import cn.tomisme.annotation.VerifyCaptcha;
+import cn.tomisme.domain.domainservice.UserService;
+import cn.tomisme.domain.model.request.user.LoginParam;
+import cn.tomisme.domain.model.request.user.RegisterParam;
+import cn.tomisme.domain.model.response.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,21 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final IUserService userService;
+    private final UserService userService;
 
     // 1. 登录、登出、注册
     @VerifyCaptcha
     @PostMapping("/login")
-    public SingleResponse<String> login(@RequestBody LoginParam param) {
+    public R<String> login(@RequestBody LoginParam param) {
         String token = userService.login(param);
-        return SingleResponse.of(token);
+        return R.success(token);
     }
 
     @VerifyCaptcha(paramName = "emailCode")
     @PostMapping("/register")
-    public SingleResponse<String> register(@RequestBody RegisterParam param) {
+    public R<String> register(@RequestBody RegisterParam param) {
         String token = userService.register(param);
-        return SingleResponse.of(token);
+        return R.success(token);
     }
 
     // 2. 权限配置

@@ -1,7 +1,7 @@
 package cn.tomisme.interceptor;
 
-import cn.tomisme.domain.annotation.VerifyCaptcha;
-import cn.tomisme.domain.model.constant.CoreConstant;
+import cn.tomisme.annotation.VerifyCaptcha;
+import cn.tomisme.constant.CoreConstant;
 import com.alibaba.cola.exception.BizException;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.extern.slf4j.Slf4j;

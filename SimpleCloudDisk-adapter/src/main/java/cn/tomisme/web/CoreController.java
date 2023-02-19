@@ -3,10 +3,10 @@ package cn.tomisme.web;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
-import cn.tomisme.api.ICoreService;
-import cn.tomisme.domain.annotation.VerifyCaptcha;
-import cn.tomisme.domain.model.constant.CoreConstant;
-import com.alibaba.cola.dto.SingleResponse;
+import cn.tomisme.annotation.VerifyCaptcha;
+import cn.tomisme.constant.CoreConstant;
+import cn.tomisme.domain.domainservice.CoreService;
+import cn.tomisme.domain.model.response.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +22,16 @@ import java.io.IOException;
 @RequestMapping("/core")
 @RequiredArgsConstructor
 public class CoreController {
-    private final ICoreService coreService;
+    private final CoreService coreService;
 
     // 1. 发送邮件
     @VerifyCaptcha
     @GetMapping("/sendEmail")
-    public SingleResponse<String> sendEmail(String email, HttpSession session) {
+    public R<String> sendEmail(String email, HttpSession session) {
         String code = new RandomGenerator(6).generate();
         session.setAttribute(CoreConstant.CAPTCHA_KEY, code);
         coreService.sendMailCode(email, code);
-        return SingleResponse.of("发送成功");
+        return R.success("发送成功", null);
     }
 
     // 2. 获取图片验证码
@@ -46,7 +46,7 @@ public class CoreController {
     // 3. 每日一言，公告
     @VerifyCaptcha
     @GetMapping("/random")
-    public SingleResponse<String> random() {
-        return SingleResponse.of("我是一言");
+    public R<String> random() {
+        return R.success("我是一言");
     }
 }

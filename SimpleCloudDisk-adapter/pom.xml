@@ -14,10 +14,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.tomisme</groupId>
-            <artifactId>SimpleCloudDisk-app</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -38,6 +34,14 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.tomisme</groupId>
+            <artifactId>SimpleCloudDisk-domain</artifactId>
         </dependency>
     </dependencies>
 

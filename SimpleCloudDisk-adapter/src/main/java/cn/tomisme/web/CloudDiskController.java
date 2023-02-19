@@ -1,11 +1,12 @@
 package cn.tomisme.web;
 
-import cn.tomisme.api.ICloudDiskService;
-import cn.tomisme.model.request.cloud.FileUploadParam;
-import com.alibaba.cola.dto.Response;
-import com.alibaba.cola.dto.SingleResponse;
+import cn.tomisme.domain.domainservice.CloudDiskService;
+import cn.tomisme.domain.model.request.cloud.FileUploadParam;
+import cn.tomisme.domain.model.response.R;
+import cn.tomisme.domain.model.response.cloud.StdFolderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,18 +22,23 @@ import java.io.IOException;
 @RequestMapping("/cloud")
 @RequiredArgsConstructor
 public class CloudDiskController {
-    private final ICloudDiskService cloudDiskService;
+    private final CloudDiskService cloudDiskService;
 
     // 1. 配置的增删改查
 
     // 2. 文件的传输（若保存到本地）
     @PostMapping("/upload")
-    public Response upload(MultipartFile file, FileUploadParam param) throws IOException {
+    public R<Boolean> upload(MultipartFile file, FileUploadParam param) throws IOException {
         boolean res = cloudDiskService.upload(file, param);
-        SingleResponse<Boolean> response = new SingleResponse<>();
-        response.setData(res);
-        return response;
+        return R.success(res);
+    }
+    // 3. 文件夹等资源
+    @GetMapping("/directory")
+    public R<StdFolderDto> directory(Integer folderId) {
+        R<StdFolderDto> r = new R<>();
+        cloudDiskService.directory(folderId);
+        return r;
     }
 
-    // 3. OSS授权
+    // 4. OSS授权
 }

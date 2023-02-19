@@ -22,5 +22,9 @@ public class Folder {
 
     private Integer userId;
 
+    private Boolean root;
+
     private Integer parentId;
+
+    private Boolean deleted;
 }

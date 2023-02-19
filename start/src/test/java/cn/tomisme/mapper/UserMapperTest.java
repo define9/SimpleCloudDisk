@@ -1,8 +1,8 @@
 package cn.tomisme.mapper;
 
-import cn.tomisme.customer.convert.UserConvert;
+import cn.tomisme.domain.convert.UserConvert;
 import cn.tomisme.dataobject.User;
-import cn.tomisme.model.request.user.RegisterParam;
+import cn.tomisme.domain.model.request.user.RegisterParam;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
