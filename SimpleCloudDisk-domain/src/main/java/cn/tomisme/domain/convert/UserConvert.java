@@ -1,5 +1,6 @@
 package cn.tomisme.domain.convert;
 
+import cn.tomisme.constant.CoreConstant;
 import cn.tomisme.dataobject.User;
 import cn.tomisme.domain.model.request.user.RegisterParam;
 
@@ -8,6 +9,7 @@ public class UserConvert {
         User user = new User();
         user.setUsername(param.getUsername());
         user.setPassword(param.getPassword());
+        user.setAvatar(CoreConstant.DEFAULT_AVATAR);
         user.setEmail(param.getEmail());
 
         user.setNick(param.getUsername());

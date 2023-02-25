@@ -8,31 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@TableName("user")
+@TableName("role")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class Role {
     @TableId(type = IdType.AUTO)
     private Integer id;
-
-    private Integer roleId;
+    private String name;
+    private String code;
     /**
-     * 容量，以兆为单位
+     * 默认容量
      */
     private Long capacity;
-
-    private String nick;
-
-    private String avatar;
-
-    private String username;
-
-    private String password;
-
-    private String email;
-
-    private Boolean disable;
-
-    private String remark;
 }

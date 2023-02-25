@@ -58,16 +58,6 @@
             </dependency>
             <dependency>
                 <groupId>cn.tomisme</groupId>
-                <artifactId>SimpleCloudDisk-client</artifactId>
-                <version>0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.tomisme</groupId>
-                <artifactId>SimpleCloudDisk-app</artifactId>
-                <version>0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.tomisme</groupId>
                 <artifactId>SimpleCloudDisk-domain</artifactId>
                 <version>0.1</version>
             </dependency>
@@ -113,12 +103,6 @@
                 <version>2.2.6</version>
             </dependency>
             <!--Validation API End -->
-            <!-- Misc -->
-            <dependency>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections</artifactId>
-                <version>0.9.10</version>
-            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
