@@ -5,15 +5,21 @@ import cn.tomisme.dataobject.Folder;
 import cn.tomisme.dataobject.Resources;
 import cn.tomisme.dataobject.StorageNodeConfig;
 import cn.tomisme.dataobject.UserResources;
+import cn.tomisme.domain.helper.CommonHelper;
+import cn.tomisme.domain.helper.PageHelper;
 import cn.tomisme.domain.model.request.cloud.FileUploadParam;
+import cn.tomisme.domain.model.response.cloud.StdConfigNodeDto;
 import cn.tomisme.domain.model.response.cloud.StdFolderContentDto;
 import cn.tomisme.domain.model.response.cloud.StdFolderDto;
 import cn.tomisme.domain.model.response.cloud.StdPathDto;
 import cn.tomisme.domain.utils.MD5Util;
+import cn.tomisme.enums.StorageNodeType;
 import cn.tomisme.mapper.FolderMapper;
 import cn.tomisme.mapper.ResourcesMapper;
 import cn.tomisme.mapper.StorageNodeConfigMapper;
 import cn.tomisme.mapper.UserResourcesMapper;
+import com.alibaba.cola.exception.BizException;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -86,8 +93,7 @@ public class CloudDiskService {
     private StorageNodeConfig getSuitableConfig(List<StorageNodeConfig> configs, long size) {
         for (StorageNodeConfig config : configs) {
             try {
-                File path = new File(config.getNodeLocalPath());
-                long space = path.getUsableSpace();
+                long space = CommonHelper.getRemainingCapacity(config.getNodeLocalPath());
                 if (space - 1024 * 1024 > size) {
                     return config;
                 }
@@ -163,5 +169,42 @@ public class CloudDiskService {
         res.setPath(path);
 
         return res;
+    }
+
+    public Page<StdConfigNodeDto> configList(Integer index, Integer size) {
+        if (index == null || size == null) throw new BizException("参数为空");
+        Page<StorageNodeConfig> p = new Page<>(index, size);
+        p = storageNodeConfigMapper.selectPage(p, null);
+        Page<StdConfigNodeDto> page = new Page<>();
+        PageHelper.convertPage(p, page);
+        List<StdConfigNodeDto> collect = p.getRecords().stream().map(node -> {
+            StdConfigNodeDto dto = new StdConfigNodeDto();
+            dto.setNodeId(node.getId());
+            dto.setSort(node.getSort());
+            dto.setNodeName(node.getNodeName());
+            dto.setNodeTypeId(node.getNodeType().getValue());
+            dto.setNodeTypeName(node.getNodeType().getStr());
+            dto.setNodeLocalPath(node.getNodeLocalPath());
+            dto.setDisable(node.getDisable());
+
+            if (StorageNodeType.LOCAL.equals(node.getNodeType())) {
+                dto.setRemainingCapacity(CommonHelper.getRemainingCapacity(node.getNodeLocalPath()));
+            }
+
+            return dto;
+        }).collect(Collectors.toList());
+        page.setRecords(collect);
+        return page;
+    }
+
+    public void updateConfigStatus(Integer id, Boolean disableStatus) {
+        StorageNodeConfig config = new StorageNodeConfig();
+        config.setId(id);
+        config.setDisable(disableStatus);
+        storageNodeConfigMapper.updateById(config);
+    }
+
+    public Long verifyPath(String path) {
+        return CommonHelper.getRemainingCapacity(path);
     }
 }
